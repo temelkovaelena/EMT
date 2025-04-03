@@ -1,8 +1,6 @@
-package com.example.lab1.model.dto;
+package com.example.lab1.dto;
 
-import com.example.lab1.model.Author;
-import com.example.lab1.model.Category;
-import jakarta.persistence.*;
+import com.example.lab1.model.enumerations.Category;
 import lombok.Data;
 
 

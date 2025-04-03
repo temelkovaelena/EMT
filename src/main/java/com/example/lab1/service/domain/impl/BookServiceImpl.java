@@ -1,13 +1,11 @@
-package com.example.lab1.service.impl;
+package com.example.lab1.service.domain.impl;
 
-import com.example.lab1.model.Author;
-import com.example.lab1.model.Book;
-import com.example.lab1.model.Category;
-import com.example.lab1.model.dto.BookDto;
+import com.example.lab1.model.domain.Book;
+import com.example.lab1.dto.BookDto;
 import com.example.lab1.repository.AuthorRepository;
 import com.example.lab1.repository.BookRepository;
-import com.example.lab1.service.AuthorService;
-import com.example.lab1.service.BookService;
+import com.example.lab1.service.domain.AuthorService;
+import com.example.lab1.service.domain.BookService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,10 +34,10 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Optional<Book> update(Long id, BookDto bookDto) {
+    public Optional<Book> update(Long id, Book bookDto) {
         Book book = this.findById(id).get();
         if (bookDto.getAuthor() != null) {
-            book.setAuthor(authorService.findById(bookDto.getAuthor()).get());
+            book.setAuthor(authorService.findById(bookDto.getAuthor().getId()).get());
         }
         if (bookDto.getCategory() != null) {
             book.setCategory(bookDto.getCategory());
@@ -55,14 +53,14 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public Optional<Book> save(BookDto book) {
+    public Optional<Book> save(Book book) {
         if(book.getName() !=null &&
-                authorService.findById(book.getAuthor()).isPresent() &&
+                authorService.findById(book.getAuthor().getId()).isPresent() &&
                 book.getCategory() !=null &&
                 book.getAvailableCopies() !=null
         ){
             return Optional.of(
-                    bookRepository.save(new Book(book.getName(),book.getCategory(),authorService.findById(book.getAuthor()).get(),book.getAvailableCopies()))
+                    bookRepository.save(new Book(book.getName(),book.getCategory(),authorService.findById(book.getAuthor().getId()).get(),book.getAvailableCopies()))
             );
         }
         return Optional.empty();

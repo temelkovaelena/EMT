@@ -1,5 +1,6 @@
-package com.example.lab1.model;
+package com.example.lab1.model.domain;
 
+import com.example.lab1.model.enumerations.Category;
 import jakarta.persistence.*;
 import lombok.Data;
 
